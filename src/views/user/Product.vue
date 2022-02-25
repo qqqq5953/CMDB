@@ -67,11 +67,17 @@
                     class="text-white"
                     @click.prevent="addProductToList"
                   >
-                    <i
-                      class="bi bi-bookmark-plus fs-3"
-                      v-if="!status.isProductInList"
-                    ></i>
-                    <i class="bi bi-bookmark-check-fill fs-3" v-else></i>
+                    <span
+                        class="spinner-border spinner-grow-sm"
+                        v-if="status.watchlistProductID === idPassIn"
+                    ></span>
+                    <span v-else>
+                      <i
+                        class="bi bi-bookmark-plus fs-3"
+                        v-if="!status.isProductInList"
+                      ></i>
+                      <i class="bi bi-bookmark-check-fill fs-3" v-else></i>
+                    </span>
                   </a>
                 </div>
 
