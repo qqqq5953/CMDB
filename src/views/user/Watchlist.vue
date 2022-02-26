@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading"></Loading>
   <div class="bg-dark h-100">
     <div
       class="container py-5 px-5 px-xl-0"
@@ -86,6 +87,7 @@ export default {
       listProducts: [],
       products: [],
       productID: '',
+      isLoading: false,
       // pagination
       totalPages: undefined,
       currentPage: 1,
@@ -94,8 +96,10 @@ export default {
   },
   methods: {
     async getList() {
-      const api = `https://api.themoviedb.org/3/list/${process.env.VUE_APP_LIST_ID}?api_key=${process.env.VUE_APP_KEY}&language=en-US`;
+      this.isLoading = true;
 
+      // api
+      const api = `https://api.themoviedb.org/3/list/${process.env.VUE_APP_LIST_ID}?api_key=${process.env.VUE_APP_KEY}&language=en-US`;
       const response = await this.$http.get(api).catch((err) => {
         console.log(err);
       });
@@ -104,6 +108,8 @@ export default {
 
       // 設置分頁
       this.setPagination();
+
+      this.isLoading = false;
     },
     setPagination(page = 1) {
       this.currentPage = page;
@@ -148,9 +154,10 @@ export default {
       });
     },
     async removeProductFromList(id) {
+      this.isLoading = true;
+
       // api
       const api = `https://api.themoviedb.org/3/list/${process.env.VUE_APP_LIST_ID}/remove_item?api_key=${process.env.VUE_APP_KEY}&session_id=${process.env.VUE_APP_SESSION_ID}`;
-
       const requestBody = {
         media_id: id
       };
@@ -161,6 +168,8 @@ export default {
 
       // 重新 render 畫面
       this.getList();
+
+      this.isLoading = false;
     }
   },
   created() {
@@ -170,8 +179,8 @@ export default {
     // 獲得 watchlist 資料
     this.getList();
 
-    /* 點擊指定產品並前往該產品頁面，
-    得到 this.products 後給 this.getProductID() 使用 */
+    /* 得到 this.products 後給 this.getProductID() 使用，
+    for 點擊指定產品並前往該產品頁面 */
     this.getAllProducts();
   }
 };
