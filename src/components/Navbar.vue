@@ -72,7 +72,7 @@
                       <img
                         v-if="item.imageUrl[0]"
                         :src="item.imageUrl[0]"
-                        class="card-img-top img-fluid d-block"
+                        class="img-fluid d-block"
                         :alt="item.title"
                       />
                       <div class="ms-3 text-light">
@@ -252,6 +252,7 @@ input[type='search']::-webkit-search-cancel-button {
 img {
   height: 70px;
   width: 50px;
+  aspect-ratio: 2 / 3;
   object-fit: cover;
 }
 
